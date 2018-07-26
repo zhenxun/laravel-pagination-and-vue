@@ -47363,27 +47363,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -47391,7 +47370,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       articles: [],
       url: '/api/articles',
       pageUrl: '/api/articles?page=',
-      pagination: [],
       pageSet: {
         totalRow: 0,
         language: 'zh',
@@ -47407,37 +47385,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       var $this = this;
       axios.get(this.url).then(function (response) {
-        console.log(response.data);
         _this.articles = response.data.data;
-
-        $this.makePagination(response.data);
         _this.pageSet.totalRow = response.data.total;
       });
-    },
-    makePagination: function makePagination(data) {
-      var pagination = {
-        current_page: data.current_page,
-        last_page: data.last_page,
-        next_page_url: data.next_page_url,
-        prev_page_url: data.prev_page_url,
-        total: data.total
-      };
-
-      this.pagination = pagination;
-    },
-    fetchPaginateArticles: function fetchPaginateArticles(url) {
-      this.url = url;
-      this.getArticles();
     },
     pageChange: function pageChange(pInfo) {
       var _this2 = this;
 
       var that = this;
-      console.log(pInfo);
-      console.log(pInfo.pageNumber);
       var purl = this.pageUrl + pInfo.pageNumber;
       axios.get(purl).then(function (response) {
-        console.log(response.data);
         _this2.articles = response.data.data;
       });
     }
@@ -47482,53 +47439,6 @@ var render = function() {
           ])
         ])
       }),
-      _vm._v(" "),
-      _c(
-        "ul",
-        { staticClass: "pagination" },
-        [
-          _c("li", { staticClass: "page-item" }, [
-            _c(
-              "a",
-              {
-                staticClass: "page-link",
-                attrs: { href: "#", disabled: !_vm.pagination.prev_page_url },
-                on: {
-                  click: function($event) {
-                    _vm.fetchPaginateArticles(_vm.pagination.prev_page_url)
-                  }
-                }
-              },
-              [_vm._v("\n             Previous\n             ")]
-            )
-          ]),
-          _vm._v(" "),
-          _vm._l(10, function(n) {
-            return _c("li", { staticClass: "page-item" }, [
-              _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-                _vm._v(_vm._s(n))
-              ])
-            ])
-          }),
-          _vm._v(" "),
-          _c("li", { staticClass: "page-item" }, [
-            _c(
-              "a",
-              {
-                staticClass: "page-link",
-                attrs: { href: "#", disabled: !_vm.pagination.next_page_url },
-                on: {
-                  click: function($event) {
-                    _vm.fetchPaginateArticles(_vm.pagination.next_page_url)
-                  }
-                }
-              },
-              [_vm._v("\n             Next\n             ")]
-            )
-          ])
-        ],
-        2
-      ),
       _vm._v(" "),
       _c("v-page", {
         attrs: { setting: _vm.pageSet },
