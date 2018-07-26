@@ -47361,8 +47361,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -47370,6 +47368,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       articles: [],
       url: '/api/articles',
       pageUrl: '/api/articles?page=',
+      search: '',
       pageSet: {
         totalRow: 0,
         language: 'zh',
@@ -47400,8 +47399,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }
   },
 
-  mounted: function mounted() {
+  created: function created() {
     this.getArticles();
+  },
+
+
+  computed: {
+    filteredArticles: function filteredArticles() {
+      var self = this;
+      return this.articles.filter(function (article) {
+        return article.title.match(self.search) || article.content.match(self.search);
+      });
+    }
+  },
+
+  mounted: function mounted() {
     console.log('Articles Component mounted.');
   }
 });
@@ -47418,7 +47430,28 @@ var render = function() {
     "div",
     { staticClass: "d-flex flex-column justify-content-center" },
     [
-      _vm._l(_vm.articles, function(article, index) {
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.search,
+            expression: "search"
+          }
+        ],
+        attrs: { type: "text", placeholder: "search articles" },
+        domProps: { value: _vm.search },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.search = $event.target.value
+          }
+        }
+      }),
+      _vm._v(" "),
+      _vm._l(_vm.filteredArticles, function(article, index) {
         return _c("div", { staticClass: "p-2 bd-highlight" }, [
           _c("div", { staticClass: "card" }, [
             _c("div", { staticClass: "card-header" }, [
